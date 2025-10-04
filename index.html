@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kancher.Tv - Личный канал Сергея Канчера</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">K</span>
+            <span class="brand-name">Kancher<span class="accent">.</span>Tv</span>
+        </div>
+        <div class="nav-links">
+            <a href="#about" class="nav-link">Обо мне</a>
+            <a href="#projects" class="nav-link">Проекты</a>
+            <a href="#hobby" class="nav-link">Хобби</a>
+            <a href="#gallery" class="nav-link">Галерея</a>
+            <a href="#contact" class="nav-link">Контакты</a>
+            <a href="admin.html" class="nav-link admin-btn">✎ Админка</a>
+        </div>
+    </nav>
+
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <main class="main-content">
+        <!-- ПРИВЕТСТВИЕ -->
+        <section class="hero">
+            <div class="avatar-container">
+                <img src="images/avatar.jpg" alt="Сергей Канчер" class="avatar" onerror="this.style.display='none'">
+                <div class="avatar-placeholder">СК</div>
+            </div>
+            <h1 class="hero-title">Сергей Канчер</h1>
+            <p class="hero-subtitle">Творчество. Проекты. Эксперименты.</p>
+            
+            <!-- ФРАЗА ДНЯ -->
+            <div class="quote-of-day">
+                <div class="quote-icon">💡</div>
+                <div class="quote-content">
+                    <p id="daily-quote">Загрузка фразы дня...</p>
+                    <small class="quote-date" id="quote-date"></small>
+                </div>
+            </div>
+        </section>
+
+        <!-- СТАТУС -->
+        <section class="status-section">
+            <div class="status-card">
+                <h3>🚧 Сайт в разработке</h3>
+                <p>Скоро здесь появится:</p>
+                <ul class="features-list">
+                    <li>🎥 Личные и профессиональные видео</li>
+                    <li>📸 Фотогалерея проектов</li>
+                    <li>💼 Портфолио работ</li>
+                    <li>🎮 Прямые трансляции</li>
+                    <li>📝 Блог и мысли</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- СЧЕТЧИК ЗАПУСКА -->
+        <section class="countdown-section">
+            <h3>До запуска осталось:</h3>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span id="countdown-days">00</span>
+                    <small>дней</small>
+                </div>
+                <div class="countdown-item">
+                    <span id="countdown-hours">00</span>
+                    <small>часов</small>
+                </div>
+                <div class="countdown-item">
+                    <span id="countdown-minutes">00</span>
+                    <small>минут</small>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <p>&copy; 2024 Kancher.Tv · Сергей Канчер</p>
+        <div class="social-links">
+            <a href="#" class="social-link">Telegram</a>
+            <a href="#" class="social-link">YouTube</a>
+            <a href="#" class="social-link">Instagram</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
