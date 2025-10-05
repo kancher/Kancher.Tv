@@ -3,7 +3,7 @@ let siteData = {
     dailyQuote: "Создавай то, что вдохновляет тебя самого",
     quoteDate: new Date().toLocaleDateString('ru-RU'),
     siteStatus: "Сайт в активной разработке",
-    launchDate: "2025-03-01",
+    launchDate: "2025-11-04",
     socialLinks: {
         telegram: "#",
         youtube: "#", 
