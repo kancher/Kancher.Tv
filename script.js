@@ -68,7 +68,6 @@ function setupPageVisibility() {
 // AI Chat Widget
 class AIChat {
     constructor() {
-        // 🔥 ЗАМЕНИЛ НА ТВОЙ РЕАЛЬНЫЙ URL!
         this.workerUrl = 'https://kancher-ai-chat.smenatv.workers.dev';
         this.isOpen = false;
         this.init();
@@ -80,22 +79,52 @@ class AIChat {
     }
 
     bindEvents() {
-        document.getElementById('chat-button').addEventListener('click', () => this.toggleChat());
-        document.getElementById('close-chat').addEventListener('click', () => this.closeChat());
-        document.getElementById('send-message').addEventListener('click', () => this.sendMessage());
-        document.getElementById('chat-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.sendMessage();
+        const chatButton = document.getElementById('chat-button');
+        const closeChat = document.getElementById('close-chat');
+        const sendMessage = document.getElementById('send-message');
+        const chatInput = document.getElementById('chat-input');
+
+        // Добавляем обработчики для мобильных устройств
+        chatButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleChat();
+        });
+        
+        closeChat.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.closeChat();
+        });
+        
+        sendMessage.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.sendMessage();
+        });
+        
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.sendMessage();
+            }
+        });
+
+        // Закрытие чата при клике вне окна
+        document.addEventListener('click', (e) => {
+            if (this.isOpen && !e.target.closest('#chat-widget')) {
+                this.closeChat();
+            }
         });
     }
 
     toggleChat() {
         this.isOpen = !this.isOpen;
         const chatWindow = document.getElementById('chat-window');
-        chatWindow.style.display = this.isOpen ? 'flex' : 'none';
         
         if (this.isOpen) {
+            chatWindow.style.display = 'flex';
             document.getElementById('chat-input').focus();
             this.addWelcomeMessage();
+        } else {
+            this.closeChat();
         }
     }
 
@@ -185,7 +214,7 @@ class AIChat {
         } catch (error) {
             console.error('Ошибка чата:', error);
             this.hideTyping();
-            this.addMessage('Ошибка соединения: ' + error.message, 'bot');
+            this.addMessage('Ошибка соединения. Попробуйте еще раз.', 'bot');
         }
     }
 }
