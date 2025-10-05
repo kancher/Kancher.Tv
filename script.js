@@ -55,13 +55,23 @@ function updateCountdown() {
 // Обновление соцсетей
 function updateSocialLinks() {
     const links = document.querySelectorAll('.social-link');
-    links[0].href = siteData.socialLinks.telegram;
-    links[1].href = siteData.socialLinks.youtube;
-    links[2].href = siteData.socialLinks.instagram;
+    if (links[0]) links[0].href = siteData.socialLinks.telegram;
+    if (links[1]) links[1].href = siteData.socialLinks.youtube;
+    if (links[2]) links[2].href = siteData.socialLinks.instagram;
+}
+
+// Слушаем изменения в LocalStorage
+function setupStorageListener() {
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'kancherTvData') {
+            loadData(); // Перезагружаем данные при изменении
+        }
+    });
 }
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', function() {
     loadData();
+    setupStorageListener();
     setInterval(updateCountdown, 60000); // Обновлять каждую минуту
 });
