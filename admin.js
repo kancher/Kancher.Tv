@@ -1,16 +1,72 @@
+// Проверка поддержки LocalStorage
+function isLocalStorageSupported() {
+    try {
+        const test = 'test';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Универсальное сохранение
+function saveData(data) {
+    if (isLocalStorageSupported()) {
+        localStorage.setItem('kancherTvData', JSON.stringify(data));
+        return true;
+    } else {
+        showStatus('LocalStorage недоступен. Скопируйте данные:', 'error');
+        console.log('Данные для копирования:', JSON.stringify(data, null, 2));
+        return false;
+    }
+}
+
+// Универсальная загрузка
+function loadData() {
+    if (isLocalStorageSupported()) {
+        return localStorage.getItem('kancherTvData');
+    }
+    return null;
+}
+
 // Загрузка данных в админку
 function loadAdminData() {
-    const saved = localStorage.getItem('kancherTvData');
+    const saved = loadData();
+    
+    // Данные по умолчанию
+    const defaultData = {
+        dailyQuote: "Создавай то, что вдохновляет тебя самого",
+        siteStatus: "Сайт в активной разработке", 
+        launchDate: "2025-11-04",
+        socialLinks: {
+            telegram: "#",
+            youtube: "#",
+            instagram: "#"
+        }
+    };
+
     if (saved) {
         const data = JSON.parse(saved);
+        // Объединяем с default данными (на случай новых полей)
+        const mergedData = { ...defaultData, ...data };
         
-        document.getElementById('quote-input').value = data.dailyQuote || '';
-        document.getElementById('status-input').value = data.siteStatus || '';
-        document.getElementById('launch-date').value = data.launchDate || '2025-11-04';
-        document.getElementById('telegram-link').value = data.socialLinks?.telegram || '';
-        document.getElementById('youtube-link').value = data.socialLinks?.youtube || '';
-        document.getElementById('instagram-link').value = data.socialLinks?.instagram || '';
+        document.getElementById('quote-input').value = mergedData.dailyQuote || '';
+        document.getElementById('status-input').value = mergedData.siteStatus || '';
+        document.getElementById('launch-date').value = mergedData.launchDate || '2025-11-04';
+        document.getElementById('telegram-link').value = mergedData.socialLinks?.telegram || '';
+        document.getElementById('youtube-link').value = mergedData.socialLinks?.youtube || '';
+        document.getElementById('instagram-link').value = mergedData.socialLinks?.instagram || '';
+    } else {
+        // Используем default данные
+        document.getElementById('quote-input').value = defaultData.dailyQuote;
+        document.getElementById('status-input').value = defaultData.siteStatus;
+        document.getElementById('launch-date').value = defaultData.launchDate;
+        document.getElementById('telegram-link').value = defaultData.socialLinks.telegram;
+        document.getElementById('youtube-link').value = defaultData.socialLinks.youtube;
+        document.getElementById('instagram-link').value = defaultData.socialLinks.instagram;
     }
+    
     updatePreview();
 }
 
@@ -22,15 +78,16 @@ function updateQuote() {
         return;
     }
 
-    const saved = localStorage.getItem('kancherTvData');
+    const saved = loadData();
     const data = saved ? JSON.parse(saved) : {};
     
     data.dailyQuote = quote;
     data.quoteDate = new Date().toLocaleDateString('ru-RU');
     
-    localStorage.setItem('kancherTvData', JSON.stringify(data));
-    showStatus('Фраза дня обновлена!', 'success');
-    updatePreview();
+    if (saveData(data)) {
+        showStatus('Фраза дня обновлена!', 'success');
+        updatePreview();
+    }
 }
 
 // Обновление статуса
@@ -38,15 +95,16 @@ function updateStatus() {
     const status = document.getElementById('status-input').value.trim();
     const launchDate = document.getElementById('launch-date').value;
 
-    const saved = localStorage.getItem('kancherTvData');
+    const saved = loadData();
     const data = saved ? JSON.parse(saved) : {};
     
     data.siteStatus = status;
     data.launchDate = launchDate;
     
-    localStorage.setItem('kancherTvData', JSON.stringify(data));
-    showStatus('Настройки сохранены!', 'success');
-    updatePreview();
+    if (saveData(data)) {
+        showStatus('Настройки сохранены!', 'success');
+        updatePreview();
+    }
 }
 
 // Обновление ссылок
@@ -55,7 +113,7 @@ function updateLinks() {
     const youtube = document.getElementById('youtube-link').value.trim();
     const instagram = document.getElementById('instagram-link').value.trim();
 
-    const saved = localStorage.getItem('kancherTvData');
+    const saved = loadData();
     const data = saved ? JSON.parse(saved) : {};
     
     if (!data.socialLinks) data.socialLinks = {};
@@ -63,26 +121,38 @@ function updateLinks() {
     data.socialLinks.youtube = youtube || '#';
     data.socialLinks.instagram = instagram || '#';
     
-    localStorage.setItem('kancherTvData', JSON.stringify(data));
-    showStatus('Ссылки обновлены!', 'success');
-    updatePreview();
+    if (saveData(data)) {
+        showStatus('Ссылки обновлены!', 'success');
+        updatePreview();
+    }
 }
 
 // Превью данных
 function updatePreview() {
-    const saved = localStorage.getItem('kancherTvData');
+    const saved = loadData();
+    const defaultData = {
+        dailyQuote: "Создавай то, что вдохновляет тебя самого",
+        siteStatus: "Сайт в активной разработке",
+        launchDate: "2025-11-04"
+    };
+    
     if (saved) {
         const data = JSON.parse(saved);
+        const mergedData = { ...defaultData, ...data };
         
-        document.getElementById('preview-quote').textContent = data.dailyQuote || 'Не установлено';
-        document.getElementById('preview-status').textContent = data.siteStatus || 'Не установлено';
-        document.getElementById('preview-launch').textContent = data.launchDate || 'Не установлено';
+        document.getElementById('preview-quote').textContent = mergedData.dailyQuote;
+        document.getElementById('preview-status').textContent = mergedData.siteStatus;
+        document.getElementById('preview-launch').textContent = mergedData.launchDate;
+    } else {
+        document.getElementById('preview-quote').textContent = defaultData.dailyQuote;
+        document.getElementById('preview-status').textContent = defaultData.siteStatus;
+        document.getElementById('preview-launch').textContent = defaultData.launchDate;
     }
 }
 
 // Экспорт данных
 function exportData() {
-    const data = localStorage.getItem('kancherTvData');
+    const data = loadData();
     if (!data) {
         showStatus('Нет данных для экспорта', 'error');
         return;
@@ -111,9 +181,10 @@ function importData() {
         reader.onload = event => {
             try {
                 const data = JSON.parse(event.target.result);
-                localStorage.setItem('kancherTvData', JSON.stringify(data));
-                loadAdminData();
-                showStatus('Данные импортированы!', 'success');
+                if (saveData(data)) {
+                    loadAdminData();
+                    showStatus('Данные импортированы!', 'success');
+                }
             } catch (err) {
                 showStatus('Ошибка при импорте файла', 'error');
             }
@@ -128,7 +199,9 @@ function importData() {
 // Сброс данных
 function resetData() {
     if (confirm('Точно сбросить все данные к default?')) {
-        localStorage.removeItem('kancherTvData');
+        if (isLocalStorageSupported()) {
+            localStorage.removeItem('kancherTvData');
+        }
         loadAdminData();
         showStatus('Данные сброшены!', 'success');
     }
@@ -139,9 +212,11 @@ function showStatus(message, type) {
     const statusEl = document.getElementById('quote-status');
     statusEl.textContent = message;
     statusEl.style.color = type === 'success' ? '#4CAF50' : '#f44336';
+    statusEl.style.display = 'block';
     
     setTimeout(() => {
         statusEl.textContent = '';
+        statusEl.style.display = 'none';
     }, 3000);
 }
 
