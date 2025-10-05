@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в админку - Kancher.Tv</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+        }
+        
+        .login-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: var(--accent-hover);
+        }
+        
+        .login-error {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">🔐 Вход в админку</h1>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-secondary);">
+                Kancher.Tv - Панель управления
+            </p>
+            
+            <input type="password" id="password-input" class="login-input" placeholder="Введите пароль">
+            <button onclick="checkPassword()" class="login-btn">Войти</button>
+            
+            <div id="login-error" class="login-error">
+                Неверный пароль!
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">← Назад на сайт</a>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // Пароль по умолчанию (можно поменять)
+        const ADMIN_PASSWORD = 'kancher2024';
+        
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorEl = document.getElementById('login-error');
+            
+            if (input === ADMIN_PASSWORD) {
+                // Сохраняем сессию
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                // Переходим в админку
+                window.location.href = 'admin.html';
+            } else {
+                errorEl.style.display = 'block';
+                document.getElementById('password-input').value = '';
+                setTimeout(() => {
+                    errorEl.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // Ввод по Enter
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
