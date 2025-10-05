@@ -65,17 +65,18 @@ function setupPageVisibility() {
     }
 }
 
-// AI Chat Widget
+// AI Chat Widget - iOS Fixed
 class AIChat {
     constructor() {
         this.workerUrl = 'https://kancher-ai-chat.smenatv.workers.dev';
         this.isOpen = false;
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         this.init();
     }
 
     init() {
         this.bindEvents();
-        console.log('AI Chat инициализирован. Worker URL:', this.workerUrl);
+        console.log('AI Chat инициализирован. iOS:', this.isIOS);
     }
 
     bindEvents() {
@@ -84,22 +85,32 @@ class AIChat {
         const sendMessage = document.getElementById('send-message');
         const chatInput = document.getElementById('chat-input');
 
-        // Добавляем обработчики для мобильных устройств
-        chatButton.addEventListener('click', (e) => {
-            e.preventDefault();
+        // Универсальные обработчики для всех устройств
+        const handleChatButton = (e) => {
+            if (e.cancelable) e.preventDefault();
             this.toggleChat();
-        });
-        
-        closeChat.addEventListener('click', (e) => {
-            e.preventDefault();
+        };
+
+        const handleCloseChat = (e) => {
+            if (e.cancelable) e.preventDefault();
             this.closeChat();
-        });
-        
-        sendMessage.addEventListener('click', (e) => {
-            e.preventDefault();
+        };
+
+        const handleSendMessage = (e) => {
+            if (e.cancelable) e.preventDefault();
             this.sendMessage();
-        });
+        };
+
+        // Добавляем оба типа событий для надежности
+        chatButton.addEventListener('click', handleChatButton);
+        chatButton.addEventListener('touchstart', handleChatButton, { passive: false });
         
+        closeChat.addEventListener('click', handleCloseChat);
+        closeChat.addEventListener('touchstart', handleCloseChat, { passive: false });
+        
+        sendMessage.addEventListener('click', handleSendMessage);
+        sendMessage.addEventListener('touchstart', handleSendMessage, { passive: false });
+
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -109,10 +120,21 @@ class AIChat {
 
         // Закрытие чата при клике вне окна
         document.addEventListener('click', (e) => {
-            if (this.isOpen && !e.target.closest('#chat-widget')) {
+            if (this.isOpen && 
+                !e.target.closest('#chat-widget') && 
+                !e.target.closest('#chat-window')) {
                 this.closeChat();
             }
         });
+
+        // Для iOS добавляем touchmove предотвращение
+        if (this.isIOS) {
+            document.addEventListener('touchmove', (e) => {
+                if (this.isOpen) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
     }
 
     toggleChat() {
@@ -121,7 +143,10 @@ class AIChat {
         
         if (this.isOpen) {
             chatWindow.style.display = 'flex';
-            document.getElementById('chat-input').focus();
+            // Небольшая задержка для iOS
+            setTimeout(() => {
+                document.getElementById('chat-input').focus();
+            }, 100);
             this.addWelcomeMessage();
         } else {
             this.closeChat();
@@ -131,6 +156,8 @@ class AIChat {
     closeChat() {
         this.isOpen = false;
         document.getElementById('chat-window').style.display = 'none';
+        // Убираем фокус с инпута
+        document.getElementById('chat-input').blur();
     }
 
     addWelcomeMessage() {
@@ -146,7 +173,10 @@ class AIChat {
         messageDiv.className = `message ${sender}-message`;
         messageDiv.textContent = text;
         messages.appendChild(messageDiv);
-        messages.scrollTop = messages.scrollHeight;
+        // Прокрутка вниз с задержкой для iOS
+        setTimeout(() => {
+            messages.scrollTop = messages.scrollHeight;
+        }, 50);
     }
 
     showTyping() {
@@ -238,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализируем AI чат
     setTimeout(() => {
         window.aiChat = new AIChat();
-    }, 100);
+    }, 500); // Увеличили задержку для iOS
     
     console.log('Kancher.Tv загружен! Счетчик активен. AI Chat готов.');
 });
@@ -247,3 +277,10 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('error', function(e) {
     console.error('Ошибка на странице:', e.error);
 });
+
+// Предотвращение стандартного поведения для iOS
+document.addEventListener('touchstart', function(e) {
+    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+        e.preventDefault();
+    }
+}, { passive: false });
