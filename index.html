@@ -16,28 +16,6 @@
     
     <!-- STYLES -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- AI Chat Widget -->
-<div id="chat-widget">
-  <div id="chat-button">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
-    </svg>
-  </div>
-  
-  <div id="chat-window" style="display: none;">
-    <div class="chat-header">
-      <span>AI Ассистент</span>
-      <button id="close-chat">×</button>
-    </div>
-    <div id="chat-messages"></div>
-    <div class="chat-input-container">
-      <input type="text" id="chat-input" placeholder="Спроси меня о чем-нибудь...">
-      <button id="send-message">➤</button>
-    </div>
-  </div>
-</div>
-    
 </head>
 <body>
     <div class="container">
@@ -90,6 +68,27 @@
         <!-- СТАТУС -->
         <div class="status fade-in">
             Запуск: 4 ноября 2025
+        </div>
+    </div>
+
+    <!-- AI Chat Widget -->
+    <div id="chat-widget">
+        <button id="chat-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+            </svg>
+        </button>
+        
+        <div id="chat-window">
+            <div class="chat-header">
+                <span>AI Ассистент</span>
+                <button id="close-chat">×</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Спроси меня о чем-нибудь..." maxlength="500">
+                <button id="send-message">➤</button>
+            </div>
         </div>
     </div>
 
