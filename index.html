@@ -1,97 +1,469 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@KANCHER - Сергей Канчер</title>
+/* МИНИМАЛИСТИЧНЫЕ СТИЛИ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* АВАТАР */
+.avatar-container {
+    margin: 0 auto 2rem;
+    width: 120px;
+    height: 120px;
+    position: relative;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+    transition: border-color 0.3s;
+}
+
+.avatar:hover {
+    border-color: #666;
+}
+
+.avatar-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border: 2px solid #333;
+}
+
+/* ЗАГОЛОВОК */
+.title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    opacity: 0.7;
+}
+
+/* ОПИСАНИЕ */
+.description {
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    opacity: 0.6;
+    line-height: 1.8;
+}
+
+/* СЧЕТЧИК */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    text-align: center;
+    min-width: 70px;
+}
+
+.countdown-number {
+    font-size: 2rem;
+    font-weight: 200;
+    display: block;
+}
+
+.countdown-label {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    margin-top: 0.5rem;
+}
+
+/* СОЦСЕТИ */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.social-link {
+    color: #ffffff;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+}
+
+.social-link:hover {
+    opacity: 1;
+}
+
+/* СТАТУС */
+.status {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+    opacity: 0.4;
+}
+
+/* АНИМАЦИЯ */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+    animation-fill-mode: both;
+}
+
+/* AI CHAT WIDGET - FIXED FOR iOS 15+ */
+#chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+}
+
+#chat-button {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    color: white;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+#chat-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+#chat-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 90vw;
+    max-width: 350px;
+    height: 50vh;
+    min-height: 400px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 15px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    z-index: 10001;
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+}
+
+.chat-header {
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+}
+
+#close-chat {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+#close-chat:active {
+    color: white;
+    transform: scale(0.9);
+}
+
+#chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.message {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    line-height: 1.4;
+    animation: messageSlide 0.3s ease;
+    word-wrap: break-word;
+    font-size: 14px;
+    transform: translateZ(0);
+}
+
+@keyframes messageSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-message {
+    background: #667eea;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.bot-message {
+    background: #2a2a2a;
+    color: white;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #333;
+}
+
+.typing-indicator {
+    align-self: flex-start;
+    background: #2a2a2a;
+    padding: 12px 16px;
+    border-radius: 18px;
+    border-bottom-left-radius: 5px;
+    display: flex;
+    gap: 4px;
+    border: 1px solid #333;
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    background: #888;
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-4px); }
+}
+
+.chat-input-container {
+    display: flex;
+    padding: 15px;
+    gap: 10px;
+    border-top: 1px solid #333;
+    flex-shrink: 0;
+    background: #1a1a1a;
+    border-radius: 0 0 15px 15px;
+}
+
+#chat-input {
+    flex: 1;
+    background: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 12px 16px;
+    color: white;
+    outline: none;
+    font-size: 16px;
+    -webkit-appearance: none;
+    border-radius: 20px;
+    min-height: 44px;
+}
+
+#chat-input:focus {
+    border-color: #667eea;
+}
+
+#send-message {
+    background: #667eea;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    font-size: 16px;
+}
+
+#send-message:active {
+    background: #5a6fd8;
+    transform: scale(0.95);
+}
+
+/* iOS 15+ Specific Fixes */
+@supports (-webkit-touch-callout: none) {
+    #chat-window {
+        height: 55vh;
+    }
     
-    <!-- FAVICON -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="icon" type="image/png" href="/images/favicon.png">
-    <link rel="apple-touch-icon" href="/images/favicon.png">
+    #chat-button {
+        -webkit-user-select: none;
+        user-select: none;
+    }
     
-    <!-- META -->
-    <meta name="description" content="Личный канал Сергея Канчера. Проекты, творчество, эксперименты.">
-    <meta name="theme-color" content="#000000">
+    .message {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .avatar-container {
+        width: 100px;
+        height: 100px;
+    }
     
-    <!-- STYLES -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <!-- АВАТАР -->
-        <div class="avatar-container fade-in">
-            <img src="images/avatar.jpg" alt="Сергей Канчер" class="avatar" 
-                 onerror="this.style.display='none'; document.getElementById('avatar-fallback').style.display='flex';">
-            <div id="avatar-fallback" class="avatar-fallback" style="display: none;">
-                K
-            </div>
-        </div>
-        
-        <!-- ЗАГОЛОВОК -->
-        <h1 class="title fade-in">@KANCHER</h1>
-        <p class="subtitle fade-in">Сергей Канчер</p>
-        
-        <!-- ОПИСАНИЕ -->
-        <div class="description fade-in">
-            Проекты · Творчество · Эксперименты<br>
-            Личный канал о Жизни, не более.
-        </div>
+    .title {
+        font-size: 2rem;
+    }
+    
+    .countdown {
+        gap: 0.8rem;
+    }
+    
+    .countdown-item {
+        min-width: 60px;
+    }
+    
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+    
+    .social-links {
+        gap: 1.5rem;
+    }
+    
+    #chat-widget {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    #chat-button {
+        width: 55px;
+        height: 55px;
+    }
+    
+    #chat-window {
+        bottom: 75px;
+        right: 10px;
+        left: 10px;
+        width: calc(100vw - 20px);
+        height: 60vh;
+    }
+}
 
-        <!-- СЧЕТЧИК -->
-        <div class="countdown fade-in">
-            <div class="countdown-item">
-                <span class="countdown-number" id="days">00</span>
-                <span class="countdown-label">дней</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="hours">00</span>
-                <span class="countdown-label">часов</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="minutes">00</span>
-                <span class="countdown-label">минут</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-number" id="seconds">00</span>
-                <span class="countdown-label">секунд</span>
-            </div>
-        </div>
+@media (max-width: 480px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .countdown {
+        gap: 0.5rem;
+    }
+    
+    .countdown-item {
+        min-width: 50px;
+    }
+    
+    .countdown-number {
+        font-size: 1.3rem;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #chat-window {
+        height: 65vh;
+        bottom: 70px;
+    }
+    
+    .message {
+        max-width: 90%;
+        font-size: 13px;
+    }
+}
 
-        <!-- СОЦСЕТИ -->
-        <div class="social-links fade-in">
-            <a href="https://t.me/kancher" class="social-link">Telegram</a>
-            <a href="https://youtube.com/@kancher" class="social-link">YouTube</a>
-            <a href="https://instagram.com/kancher" class="social-link">Instagram</a>
-        </div>
+/* Предотвращение выделения текста на iOS */
+#chat-widget * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-        <!-- СТАТУС -->
-        <div class="status fade-in">
-            Запуск: 4 ноября 2025
-        </div>
-    </div>
+#chat-input {
+    -webkit-user-select: text;
+    user-select: text;
+}
 
-    <!-- AI Chat Widget -->
-    <div id="chat-widget">
-        <button id="chat-button">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
-            </svg>
-        </button>
-        
-        <div id="chat-window">
-            <div class="chat-header">
-                <span>AI Ассистент</span>
-                <button id="close-chat">×</button>
-            </div>
-            <div id="chat-messages"></div>
-            <div class="chat-input-container">
-                <input type="text" id="chat-input" placeholder="Спроси меня о чем-нибудь..." maxlength="500">
-                <button id="send-message">➤</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+/* Предотвращение zoom при фокусе на iOS */
+@media screen and (max-width: 768px) {
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+}
