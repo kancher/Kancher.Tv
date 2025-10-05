@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админка - Kancher.Tv</title>
     <link rel="stylesheet" href="style.css">
+
+    <script>
+    // Проверка авторизации
+    if (!sessionStorage.getItem('adminAuthenticated')) {
+        window.location.href = 'login.html';
+    }
+    
+    // Выход из админки
+    function logout() {
+        sessionStorage.removeItem('adminAuthenticated');
+        window.location.href = 'login.html';
+    }
+</script>
+    
 </head>
 <body class="admin-body">
     <div class="admin-container">
