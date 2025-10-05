@@ -13,175 +13,8 @@
     <meta name="description" content="Личный канал Сергея Канчера. Проекты, творчество, эксперименты.">
     <meta name="theme-color" content="#000000">
     
-    <style>
-        /* МИНИМАЛИСТИЧНЫЕ СТИЛИ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000000;
-            color: #ffffff;
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-
-        /* АВАТАР */
-        .avatar-container {
-            margin: 0 auto 2rem;
-            width: 120px;
-            height: 120px;
-            position: relative;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #333;
-            transition: border-color 0.3s;
-        }
-
-        .avatar:hover {
-            border-color: #666;
-        }
-
-        .avatar-fallback {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            border: 2px solid #333;
-        }
-
-        /* ЗАГОЛОВОК */
-        .title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            font-weight: 300;
-            margin-bottom: 3rem;
-            opacity: 0.7;
-        }
-
-        /* ОПИСАНИЕ */
-        .description {
-            font-size: 1rem;
-            margin-bottom: 3rem;
-            opacity: 0.6;
-            line-height: 1.8;
-        }
-
-        /* СЧЕТЧИК */
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-number {
-            font-size: 2rem;
-            font-weight: 200;
-            display: block;
-        }
-
-        .countdown-label {
-            font-size: 0.8rem;
-            opacity: 0.5;
-            margin-top: 0.5rem;
-        }
-
-        /* СОЦСЕТИ */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .social-link {
-            color: #ffffff;
-            text-decoration: none;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .social-link:hover {
-            opacity: 1;
-        }
-
-        /* СТАТУС */
-        .status {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            opacity: 0.4;
-        }
-
-        /* АНИМАЦИЯ */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 768px) {
-            .avatar-container {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .title {
-                font-size: 2rem;
-            }
-            
-            .countdown {
-                gap: 1rem;
-            }
-            
-            .countdown-number {
-                font-size: 1.5rem;
-            }
-            
-            .social-links {
-                gap: 1.5rem;
-            }
-        }
-    </style>
+    <!-- STYLES -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -201,7 +34,7 @@
         <!-- ОПИСАНИЕ -->
         <div class="description fade-in">
             Проекты · Творчество · Эксперименты<br>
-            Личный канал о Жизни, не более.
+            Личный канал о разработке и не только
         </div>
 
         <!-- СЧЕТЧИК -->
@@ -218,6 +51,10 @@
                 <span class="countdown-number" id="minutes">00</span>
                 <span class="countdown-label">минут</span>
             </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">секунд</span>
+            </div>
         </div>
 
         <!-- СОЦСЕТИ -->
@@ -233,38 +70,6 @@
         </div>
     </div>
 
-    <script>
-        // Счетчик до запуска
-        function updateCountdown() {
-            const targetDate = new Date('2025-11-04').getTime();
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            } else {
-                document.querySelector('.countdown').innerHTML = '<div class="countdown-item">🎉 Запущен!</div>';
-            }
-        }
-
-        // Плавное появление
-        document.addEventListener('DOMContentLoaded', function() {
-            // Запускаем счетчик
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
-            
-            // Анимация появления элементов с задержкой
-            const elements = document.querySelectorAll('.fade-in');
-            elements.forEach((el, index) => {
-                el.style.animationDelay = (index * 0.15) + 's';
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
