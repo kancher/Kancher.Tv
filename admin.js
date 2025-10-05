@@ -6,7 +6,7 @@ function loadAdminData() {
         
         document.getElementById('quote-input').value = data.dailyQuote || '';
         document.getElementById('status-input').value = data.siteStatus || '';
-        document.getElementById('launch-date').value = data.launchDate || '2025-03-01';
+        document.getElementById('launch-date').value = data.launchDate || '2025-11-04';
         document.getElementById('telegram-link').value = data.socialLinks?.telegram || '';
         document.getElementById('youtube-link').value = data.socialLinks?.youtube || '';
         document.getElementById('instagram-link').value = data.socialLinks?.instagram || '';
