@@ -87,6 +87,11 @@ function updateQuote() {
     if (saveData(data)) {
         showStatus('Фраза дня обновлена!', 'success');
         updatePreview();
+        
+        // Обновляем главную страницу если она открыта
+        if (window.opener && !window.opener.closed) {
+            window.opener.location.reload();
+        }
     }
 }
 
