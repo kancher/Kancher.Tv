@@ -1,0 +1,203 @@
+/* МИНИМАЛИСТИЧНЫЕ СТИЛИ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* АВАТАР */
+.avatar-container {
+    margin: 0 auto 2rem;
+    width: 120px;
+    height: 120px;
+    position: relative;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #333;
+    transition: border-color 0.3s;
+}
+
+.avatar:hover {
+    border-color: #666;
+}
+
+.avatar-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border: 2px solid #333;
+}
+
+/* ЗАГОЛОВОК */
+.title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    opacity: 0.7;
+}
+
+/* ОПИСАНИЕ */
+.description {
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    opacity: 0.6;
+    line-height: 1.8;
+}
+
+/* СЧЕТЧИК */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    text-align: center;
+    min-width: 70px;
+}
+
+.countdown-number {
+    font-size: 2rem;
+    font-weight: 200;
+    display: block;
+}
+
+.countdown-label {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    margin-top: 0.5rem;
+}
+
+/* СОЦСЕТИ */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.social-link {
+    color: #ffffff;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+}
+
+.social-link:hover {
+    opacity: 1;
+}
+
+/* СТАТУС */
+.status {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+    opacity: 0.4;
+}
+
+/* АНИМАЦИЯ */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+    animation-fill-mode: both;
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 768px) {
+    .avatar-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .countdown {
+        gap: 0.8rem;
+    }
+    
+    .countdown-item {
+        min-width: 60px;
+    }
+    
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+    
+    .social-links {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .countdown {
+        gap: 0.5rem;
+    }
+    
+    .countdown-item {
+        min-width: 50px;
+    }
+    
+    .countdown-number {
+        font-size: 1.3rem;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
