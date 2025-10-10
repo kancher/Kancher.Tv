@@ -206,6 +206,17 @@ body {
     margin-bottom: 0.8rem;
 }
 
+.timeline-content ul {
+    opacity: 0.8;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.timeline-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
 .timeline-content em {
     color: var(--accent);
     font-style: italic;
@@ -373,8 +384,9 @@ body {
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-bottom: 3rem;
+    flex-wrap: wrap;
 }
 
 .social-link {
@@ -384,6 +396,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 25px;
     transition: all 0.3s ease;
+    font-size: 0.9rem;
 }
 
 .social-link:hover {
@@ -412,7 +425,7 @@ body {
     animation: fadeIn 1s ease-out forwards;
 }
 
-/* AI Chat Widget - ОРИГИНАЛЬНЫЙ СТИЛЬ */
+/* AI Chat Widget */
 #chat-widget {
     position: fixed;
     bottom: 20px;
@@ -680,5 +693,14 @@ body {
     .message {
         max-width: 90%;
         font-size: 13px;
+    }
+    
+    .social-links {
+        gap: 1rem;
+    }
+    
+    .social-link {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
     }
 }
