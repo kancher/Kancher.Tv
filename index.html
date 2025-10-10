@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KANCHER | Медиа-комбайн</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Главный экран -->
+    <section id="hero" class="fullscreen-section">
+        <div class="container">
+            <div class="avatar-container fade-in">
+                <div class="avatar-fallback">K</div>
+            </div>
+            <h1 class="title fade-in">Сергей Канчер</h1>
+            <p class="subtitle fade-in">Медиа-комбайн / Продюсер / Режиссёр</p>
+            <p class="tagline fade-in">«Создаю тренды, а не слежу за ними»</p>
+            <div class="scroll-indicator fade-in">
+                <span>листай вниз</span>
+                <div class="arrow"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Таймлайн Опыта работы -->
     <section id="timeline">
         <div class="timeline-line"></div>
@@ -77,6 +103,32 @@
         </div>
     </section>
 
+    <!-- Цитата -->
+    <section id="quote" class="fullscreen-section">
+        <div class="container">
+            <blockquote class="quote-text" id="random-quote">
+                <!-- Сюда вставится случайная цитата -->
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- Проекты в работе -->
+    <section id="projects">
+        <div class="container">
+            <h2>Проекты в работе</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>«1999.ДЕТИ»</h3>
+                    <p>Документальный проект-коллаборация с уличным художником Слава ПТРК и группой СБПЧ. О трёхсотлетней войне.</p>
+                </div>
+                <div class="project-card">
+                    <h3>«UPPA»</h3>
+                    <p>Документальный фильм о виноделе Павле Швеце.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- О себе -->
     <section id="about">
         <div class="container">
@@ -101,3 +153,36 @@
             </div>
         </div>
     </section>
+
+    <!-- Контакты -->
+    <footer id="contacts">
+        <div class="container">
+            <h2>Контакт</h2>
+            <p>Для сотрудничества, разговоров о вечном и просто хорошей беседы:</p>
+            <div class="social-links">
+                <a href="https://t.me/KANCHER" class="social-link">Telegram</a>
+                <a href="mailto:your-email@example.com" class="social-link">Email</a>
+            </div>
+            <p class="footer-note">Сайт, как и жизнь, в постоянном развитии.</p>
+        </div>
+    </footer>
+
+    <!-- AI Chat Widget (оригинальный) -->
+    <div id="chat-widget">
+        <button id="chat-button">💬</button>
+        <div id="chat-window">
+            <div class="chat-header">
+                <span>AI Ассистент Канчера</span>
+                <button id="close-chat">×</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Спроси о чём-то...">
+                <button id="send-message">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
