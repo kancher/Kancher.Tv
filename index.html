@@ -1,469 +1,137 @@
-/* МИНИМАЛИСТИЧНЫЕ СТИЛИ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KANCHER | Медиа-комбайн</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Главный экран -->
+    <section id="hero" class="fullscreen-section">
+        <div class="container">
+            <div class="avatar-container fade-in">
+                <div class="avatar-fallback">K</div>
+            </div>
+            <h1 class="title fade-in">Сергей Канчер</h1>
+            <p class="subtitle fade-in">Медиа-комбайн / Продюсер / Режиссёр</p>
+            <p class="tagline fade-in">«Создаю тренды, а не слежу за ними»</p>
+            <div class="scroll-indicator fade-in">
+                <span>листай вниз</span>
+                <div class="arrow"></div>
+            </div>
+        </div>
+    </section>
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #000000;
-    color: #ffffff;
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+    <!-- Таймлайн -->
+    <section id="timeline">
+        <div class="timeline-line"></div>
+        
+        <div class="timeline-item">
+            <div class="timeline-content left">
+                <div class="year">2009</div>
+                <h3>Севастопольский Национальный Технический Университет</h3>
+                <p>Инженер автомобилей и автомобильного хозяйства. Взял бюджет силой ума, без взяток. Параллельно — Диск-Жокей и Арт-директор в клубе «Премьер». Заряжал людей до отказа.</p>
+            </div>
+        </div>
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    text-align: center;
-}
+        <div class="timeline-item">
+            <div class="timeline-content right">
+                <div class="year">2010-2011</div>
+                <h3>O2TV</h3>
+                <p>«Адекватное телевидение для адекватных людей». Режиссёр на кнопках. Научил операторов не штаны просиживать, а кадр искать.</p>
+            </div>
+        </div>
 
-/* АВАТАР */
-.avatar-container {
-    margin: 0 auto 2rem;
-    width: 120px;
-    height: 120px;
-    position: relative;
-}
+        <div class="timeline-item">
+            <div class="timeline-content left">
+                <div class="year">2011-2012</div>
+                <h3>MTV Россия</h3>
+                <p>Промо-продюсер. Успел в последний вагон уходящего поезда эпохи музыкального ТВ.</p>
+            </div>
+        </div>
 
-.avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #333;
-    transition: border-color 0.3s;
-}
+        <div class="timeline-item">
+            <div class="timeline-content right">
+                <div class="year">2012-2016</div>
+                <h3>ПЕРВЫЙ КАНАЛ</h3>
+                <p>Автор по договору, «комбайн» по факту. От режиссуры и продюсирования до кризис-менеджмента и ночного сторожа. Школа высшего пилотажа.</p>
+            </div>
+        </div>
 
-.avatar:hover {
-    border-color: #666;
-}
+        <div class="timeline-item">
+            <div class="timeline-content left">
+                <div class="year">2016-2025</div>
+                <h3>ПОИСК СЕБЯ</h3>
+                <p>Осознанный творческий отпуск. Погружение в литературу, кино, музыку, digital. Изучение аудитории. Поиск новых форматов. Сохранение горения.</p>
+            </div>
+        </div>
 
-.avatar-fallback {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    border: 2px solid #333;
-}
+        <div class="timeline-item">
+            <div class="timeline-content right">
+                <div class="year">СЕЙЧАС</div>
+                <h3>СВОБОДНЫЙ ХУДОЖНИК</h3>
+                <p>В работе: документальные проекты «1999.ДЕТИ» и «UPPA». Открыт для крутых коллабораций в медиа-поле.</p>
+            </div>
+        </div>
+    </section>
 
-/* ЗАГОЛОВОК */
-.title {
-    font-size: 2.5rem;
-    font-weight: 300;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #fff, #888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+    <!-- Цитата -->
+    <section id="quote" class="fullscreen-section">
+        <div class="container">
+            <blockquote class="quote-text" id="random-quote">
+                <!-- Сюда вставится случайная цитата -->
+            </blockquote>
+        </div>
+    </section>
 
-.subtitle {
-    font-size: 1.1rem;
-    font-weight: 300;
-    margin-bottom: 3rem;
-    opacity: 0.7;
-}
+    <!-- Проекты -->
+    <section id="projects">
+        <div class="container">
+            <h2>Проекты в работе</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>«1999.ДЕТИ»</h3>
+                    <p>Документальный проект-коллаборация с уличным художником Слава ПТРК и группой СБПЧ. О трёхсотлетней войне.</p>
+                </div>
+                <div class="project-card">
+                    <h3>«UPPA»</h3>
+                    <p>Документальный фильм о виноделе Павле Швеце. О таланте, терпении и поиске идеального вкуса.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-/* ОПИСАНИЕ */
-.description {
-    font-size: 1rem;
-    margin-bottom: 3rem;
-    opacity: 0.6;
-    line-height: 1.8;
-}
+    <!-- Контакты -->
+    <footer id="contacts">
+        <div class="container">
+            <h2>Контакт</h2>
+            <p>Для сотрудничества, разговоров о вечном и просто хорошей беседы:</p>
+            <div class="social-links">
+                <a href="https://t.me/KANCHER" class="social-link">Telegram</a>
+                <a href="mailto:your-email@example.com" class="social-link">Email</a>
+            </div>
+            <p class="footer-note">Сайт, как и жизнь, в постоянном развитии.</p>
+        </div>
+    </footer>
 
-/* СЧЕТЧИК */
-.countdown {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin: 3rem 0;
-    flex-wrap: wrap;
-}
+    <!-- AI Chat Widget (твой старый, он тут остаётся) -->
+    <div id="chat-widget">
+        <button id="chat-button">💬</button>
+        <div id="chat-window">
+            <div class="chat-header">
+                <span>AI Ассистент Канчера</span>
+                <button id="close-chat">×</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Спроси о чём-то...">
+                <button id="send-message">➤</button>
+            </div>
+        </div>
+    </div>
 
-.countdown-item {
-    text-align: center;
-    min-width: 70px;
-}
-
-.countdown-number {
-    font-size: 2rem;
-    font-weight: 200;
-    display: block;
-}
-
-.countdown-label {
-    font-size: 0.8rem;
-    opacity: 0.5;
-    margin-top: 0.5rem;
-}
-
-/* СОЦСЕТИ */
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.social-link {
-    color: #ffffff;
-    text-decoration: none;
-    opacity: 0.6;
-    transition: opacity 0.3s;
-    font-size: 0.9rem;
-}
-
-.social-link:hover {
-    opacity: 1;
-}
-
-/* СТАТУС */
-.status {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #333;
-    font-size: 0.9rem;
-    opacity: 0.4;
-}
-
-/* АНИМАЦИЯ */
-@keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
-
-.fade-in {
-    animation: fadeIn 1s ease-out;
-    animation-fill-mode: both;
-}
-
-/* AI CHAT WIDGET - FIXED FOR iOS 15+ */
-#chat-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 10000;
-}
-
-#chat-button {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    color: white;
-    border: none;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-#chat-button:active {
-    transform: scale(0.95);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-#chat-window {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 90vw;
-    max-width: 350px;
-    height: 50vh;
-    min-height: 400px;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 15px;
-    display: none;
-    flex-direction: column;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    z-index: 10001;
-    -webkit-overflow-scrolling: touch;
-    transform: translateZ(0);
-}
-
-.chat-header {
-    background: #2a2a2a;
-    padding: 15px;
-    border-radius: 15px 15px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 500;
-    border-bottom: 1px solid #333;
-    flex-shrink: 0;
-}
-
-#close-chat {
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-#close-chat:active {
-    color: white;
-    transform: scale(0.9);
-}
-
-#chat-messages {
-    flex: 1;
-    padding: 15px;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    -webkit-overflow-scrolling: touch;
-}
-
-.message {
-    max-width: 85%;
-    padding: 12px 16px;
-    border-radius: 18px;
-    line-height: 1.4;
-    animation: messageSlide 0.3s ease;
-    word-wrap: break-word;
-    font-size: 14px;
-    transform: translateZ(0);
-}
-
-@keyframes messageSlide {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.user-message {
-    background: #667eea;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
-}
-
-.bot-message {
-    background: #2a2a2a;
-    color: white;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
-    border: 1px solid #333;
-}
-
-.typing-indicator {
-    align-self: flex-start;
-    background: #2a2a2a;
-    padding: 12px 16px;
-    border-radius: 18px;
-    border-bottom-left-radius: 5px;
-    display: flex;
-    gap: 4px;
-    border: 1px solid #333;
-}
-
-.typing-dot {
-    width: 6px;
-    height: 6px;
-    background: #888;
-    border-radius: 50%;
-    animation: typingBounce 1.4s infinite;
-}
-
-.typing-dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingBounce {
-    0%, 60%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-4px); }
-}
-
-.chat-input-container {
-    display: flex;
-    padding: 15px;
-    gap: 10px;
-    border-top: 1px solid #333;
-    flex-shrink: 0;
-    background: #1a1a1a;
-    border-radius: 0 0 15px 15px;
-}
-
-#chat-input {
-    flex: 1;
-    background: #2a2a2a;
-    border: 1px solid #333;
-    border-radius: 20px;
-    padding: 12px 16px;
-    color: white;
-    outline: none;
-    font-size: 16px;
-    -webkit-appearance: none;
-    border-radius: 20px;
-    min-height: 44px;
-}
-
-#chat-input:focus {
-    border-color: #667eea;
-}
-
-#send-message {
-    background: #667eea;
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    font-size: 16px;
-}
-
-#send-message:active {
-    background: #5a6fd8;
-    transform: scale(0.95);
-}
-
-/* iOS 15+ Specific Fixes */
-@supports (-webkit-touch-callout: none) {
-    #chat-window {
-        height: 55vh;
-    }
-    
-    #chat-button {
-        -webkit-user-select: none;
-        user-select: none;
-    }
-    
-    .message {
-        -webkit-user-select: none;
-        user-select: none;
-    }
-}
-
-/* Мобильная адаптация */
-@media (max-width: 768px) {
-    .avatar-container {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .title {
-        font-size: 2rem;
-    }
-    
-    .countdown {
-        gap: 0.8rem;
-    }
-    
-    .countdown-item {
-        min-width: 60px;
-    }
-    
-    .countdown-number {
-        font-size: 1.5rem;
-    }
-    
-    .social-links {
-        gap: 1.5rem;
-    }
-    
-    #chat-widget {
-        bottom: 15px;
-        right: 15px;
-    }
-    
-    #chat-button {
-        width: 55px;
-        height: 55px;
-    }
-    
-    #chat-window {
-        bottom: 75px;
-        right: 10px;
-        left: 10px;
-        width: calc(100vw - 20px);
-        height: 60vh;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 1.5rem 1rem;
-    }
-    
-    .countdown {
-        gap: 0.5rem;
-    }
-    
-    .countdown-item {
-        min-width: 50px;
-    }
-    
-    .countdown-number {
-        font-size: 1.3rem;
-    }
-    
-    .social-links {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    #chat-window {
-        height: 65vh;
-        bottom: 70px;
-    }
-    
-    .message {
-        max-width: 90%;
-        font-size: 13px;
-    }
-}
-
-/* Предотвращение выделения текста на iOS */
-#chat-widget * {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-#chat-input {
-    -webkit-user-select: text;
-    user-select: text;
-}
-
-/* Предотвращение zoom при фокусе на iOS */
-@media screen and (max-width: 768px) {
-    input, textarea, select {
-        font-size: 16px !important;
-    }
-}
+    <script src="script.js"></script>
+</body>
+</html>
