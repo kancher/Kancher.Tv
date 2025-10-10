@@ -54,7 +54,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// AI Chat Widget - ОРИГИНАЛЬНЫЙ КОД
+// AI Chat Widget
 class AIChat {
     constructor() {
         this.workerUrl = 'https://kancher-ai-chat.smenatv.workers.dev';
