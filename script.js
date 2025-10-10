@@ -8,6 +8,27 @@ const quotes = [
     "«Смешивай краски, ищи новые ростки»"
 ];
 
+// База знаний для AI ассистента
+const knowledgeBase = {
+    "проекты": "Сергей работал над множеством проектов: спец-проекты для 2x2, Русская Медиа Группа, музыкальные клипы для Димы Билана, Kamchatka.Camp, реклама для Связного, исполнительный продюсер для канала Пятница (Coca Cola, Venus), Gillette #fistreal, GQ Человек года, сериал Половинки на MTV Россия.",
+    
+    "опыт": "Опыт работы: Первый Канал (2012-2016) - автор и универсальный специалист, MTV Россия (2011-2012) - промо-продюсер, O2TV (2010-2011) - режиссёр. Также автор на шоу 'Вечерний Ургант'.",
+    
+    "навыки": "Навыки: режиссура, продюсирование, операторская работа, монтаж, копирайтинг, кризис-менеджмент, работа с талантами, управление проектами.",
+    
+    "образование": "Образование: Севастопольский национальный технический университет, инженер автомобилей и автомобильного хозяйства.",
+    
+    "увлечения": "Увлечения: ретро- и электромобили, мото, компьютерные системы, AI, сноуборд, белые стихи, sMnNa.Tv.",
+    
+    "текущие": "Текущие проекты: '1999.ДЕТИ' - документальный проект о трёхсотлетней войне, 'UPPA' - документальный фильм о виноделе Павле Швеце.",
+    
+    "ургант": "Сергей был автором на шоу 'Вечерний Ургант' - топовом развлекательном Late Night шоу на Первом Канале.",
+    
+    "комбайн": "Режим 'комбайна' - это работа универсального специалиста, который решает сверхзадачи от кризис-менеджмента до координации съёмочных групп.",
+    
+    "контакты": "Контакты: Telegram @KANCHER, Instagram @kancher, YouTube @Kancher"
+};
+
 // Случайная цитата при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     // Случайная цитата
@@ -16,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Анимация появления элементов при скролле
     const timelineItems = document.querySelectorAll('.timeline-item');
+    const projectCards = document.querySelectorAll('#key-projects .project-card, #projects .project-card');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -30,6 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     timelineItems.forEach(item => {
         observer.observe(item);
+    });
+
+    projectCards.forEach(card => {
+        observer.observe(card);
     });
 
     // Инициализация AI-чата
@@ -54,7 +80,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// AI Chat Widget
+// AI Chat Widget - iOS Fixed
 class AIChat {
     constructor() {
         this.workerUrl = 'https://kancher-ai-chat.smenatv.workers.dev';
@@ -152,7 +178,7 @@ class AIChat {
     addWelcomeMessage() {
         const messages = document.getElementById('chat-messages');
         if (messages.children.length === 0) {
-            this.addMessage('Привет! Я AI-ассистент Сергея. Спроси меня о проектах, творчестве или чем-то еще!', 'bot');
+            this.addMessage('Привет! Я AI-ассистент Сергея Канчера. Спроси меня о проектах, опыте работы, навыках или увлечениях!', 'bot');
         }
     }
 
@@ -187,6 +213,40 @@ class AIChat {
         if (typing) typing.remove();
     }
 
+    findAnswer(question) {
+        const lowerQuestion = question.toLowerCase();
+        
+        // Поиск по ключевым словам
+        for (const [key, answer] of Object.entries(knowledgeBase)) {
+            if (lowerQuestion.includes(key)) {
+                return answer;
+            }
+        }
+        
+        // Дополнительные проверки для синонимов
+        if (lowerQuestion.includes('работа') || lowerQuestion.includes('опыт') || lowerQuestion.includes('карьер')) {
+            return knowledgeBase.опыт;
+        }
+        
+        if (lowerQuestion.includes('умеет') || lowerQuestion.includes('может') || lowerQuestion.includes('скил')) {
+            return knowledgeBase.навыки;
+        }
+        
+        if (lowerQuestion.includes('учил') || lowerQuestion.includes('образован') || lowerQuestion.includes('вуз')) {
+            return knowledgeBase.образование;
+        }
+        
+        if (lowerQuestion.includes('хобби') || lowerQuestion.includes('интерес') || lowerQuestion.includes('увлекает')) {
+            return knowledgeBase.увлечения;
+        }
+        
+        if (lowerQuestion.includes('связь') || lowerQuestion.includes('контакт') || lowerQuestion.includes('телеграм') || lowerQuestion.includes('инстаграм')) {
+            return knowledgeBase.контакты;
+        }
+        
+        return "Я пока не знаю ответ на этот вопрос. Вы можете спросить о проектах Сергея, его опыте работы, навыках, образовании или увлечениях.";
+    }
+
     async sendMessage() {
         const input = document.getElementById('chat-input');
         const message = input.value.trim();
@@ -201,15 +261,29 @@ class AIChat {
         this.showTyping();
 
         try {
+            // Сначала проверяем локальную базу знаний
+            const localAnswer = this.findAnswer(message);
+            
+            if (localAnswer && !localAnswer.includes("не знаю")) {
+                setTimeout(() => {
+                    this.hideTyping();
+                    this.addMessage(localAnswer, 'bot');
+                }, 1000);
+                return;
+            }
+
+            // Если в локальной базе нет ответа, обращаемся к Worker
             console.log('Отправка запроса к:', this.workerUrl);
             
-            // Отправляем запрос к нашему Worker
             const response = await fetch(this.workerUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message })
+                body: JSON.stringify({ 
+                    message,
+                    context: "Сергей Канчер - медиа-профессионал с опытом на Первом Канале, MTV Россия, автор шоу 'Вечерний Ургант'. Специализируется на режиссуре, продюсировании, монтаже."
+                })
             });
 
             console.log('Получен ответ:', response.status);
@@ -233,7 +307,9 @@ class AIChat {
         } catch (error) {
             console.error('Ошибка чата:', error);
             this.hideTyping();
-            this.addMessage('Ошибка соединения. Попробуйте еще раз.', 'bot');
+            // Если произошла ошибка, используем локальный ответ
+            const localAnswer = this.findAnswer(message);
+            this.addMessage(localAnswer, 'bot');
         }
     }
 }
