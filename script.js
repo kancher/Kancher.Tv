@@ -1,7 +1,7 @@
 // Цитаты для случайного показа
 const quotes = [
-    "«Магия телевидения и ложь ~ это разные вещи»",
-    "«Дело, как и любое дело ~ дело Жизни!»", 
+    "«Магия телевидения и ложь — это разные вещи»",
+    "«Дело, как и любое дело — дело Жизни!»", 
     "«Смешивай краски, ищи новые ростки»",
     "«Процесс создания ~ это и есть тот самый МИГ Счастья, а не поскорее слить проект и... что?»",
     "«Телек КруглоСуточный, как и МИР вокруг тебя»",
@@ -452,7 +452,7 @@ class AIChat {
         this.showTyping();
 
         try {
-            // Пробуем отправить на Worker для улучшенной обработки
+            // Пробуем отправить на Worker
             const response = await this.sendToWorker(message);
             this.hideTyping();
             this.addMessage(response, 'bot');
@@ -486,9 +486,7 @@ class AIChat {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                message: message,
-                knowledgeBase: knowledgeBase,
-                fallbackResponses: fallbackResponses
+                message: message
             })
         });
 
@@ -497,7 +495,15 @@ class AIChat {
         }
 
         const data = await response.json();
-        return data.answer;
+        
+        // ФИКС: Worker возвращает {reply: "текст"}, а мы ожидаем {answer: "текст"}
+        if (data.reply) {
+            return data.reply;
+        } else if (data.answer) {
+            return data.answer;
+        } else {
+            throw new Error('Неправильный формат ответа от Worker');
+        }
     }
 }
 
