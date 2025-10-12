@@ -39,7 +39,7 @@ const knowledgeBase = {
     
     "ответственность": "Как говорится в мультфильме 'Три Богатыря': 'А ты про ответственность не забыл? Решения судьбоносные, а не только болтать!' — это стало одним из его принципов.",
     
-    // Проекты и опыт (дополняем)
+    // Проекты и опыт
     "проекты": "Сергей работал над проектами для 2x2, Русской Медиа Группы, Димы Билана, Kamchatka.Camp, Связного, Пятницы, Gillette, GQ. Но главное — он создавал не просто контент, а 'видео-произведения'.",
     
     "ургант": "На 'Вечернем Урганте' Сергей был тем самым 'секретным болтом' — автором внестудийного контента, который работал в режиме полного цикла: от идеи до эфира.",
@@ -60,7 +60,14 @@ const knowledgeBase = {
     
     "принципы": "Искренность выше лоска. Ответственность за судьбоносные решения. Готовность быть 'комбайном'. Вера в магию без лжи.",
     
-    "контакты": "Telegram @KANCHER, Instagram @kancher, YouTube @Kancher — но главный контакт это искренний разговор о том, что действительно важно."
+    "контакты": "Telegram @KANCHER, Instagram @kancher, YouTube @Kancher — но главный контакт это искренний разговор о том, что действительно важно.",
+    
+    // Дополнительные темы
+    "навыки": "Режиссура, продюсирование, операторская работа, монтаж, постановка света, разработка концепций, работа с талантами, кризис-менеджмент, планирование производства.",
+    
+    "образование": "Севастопольский национальный технический университет (ныне СевГУ), инженер автомобилей и автомобильного хозяйства. Дипломы бакалавра и специалиста.",
+    
+    "опыт": "Более 15 лет в медиа: Первый канал ('Вечерний Ургант'), MTV Россия, O2TV, Русская Медиа Группа, каналы 2x2 и 'Пятница', работа с брендами Coca Cola, Gillette, Venus, Dirol."
 };
 
 // Случайная цитата при загрузке
@@ -97,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация AI-чата
     setTimeout(() => {
         window.aiChat = new AIChat();
+        console.log('AI Chat инициализирован');
     }, 1000);
 });
 
@@ -133,7 +141,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // AI Chat Widget
 class AIChat {
     constructor() {
-        this.workerUrl = 'https://kancher-ai-chat.smenatv.workers.dev';
         this.isOpen = false;
         this.init();
     }
@@ -149,75 +156,89 @@ class AIChat {
         const sendMessage = document.getElementById('send-message');
         const chatInput = document.getElementById('chat-input');
 
-        chatButton.addEventListener('click', () => this.toggleChat());
-        closeChat.addEventListener('click', () => this.closeChat());
-        sendMessage.addEventListener('click', () => this.sendMessage());
+        if (chatButton && closeChat && sendMessage && chatInput) {
+            chatButton.addEventListener('click', () => this.toggleChat());
+            closeChat.addEventListener('click', () => this.closeChat());
+            sendMessage.addEventListener('click', () => this.sendMessage());
 
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.sendMessage();
-            }
-        });
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.sendMessage();
+                }
+            });
 
-        // Закрытие чата при клике вне окна
-        document.addEventListener('click', (e) => {
-            if (this.isOpen && 
-                !e.target.closest('#chat-widget') && 
-                !e.target.closest('#chat-window')) {
-                this.closeChat();
-            }
-        });
+            // Закрытие чата при клике вне окна
+            document.addEventListener('click', (e) => {
+                if (this.isOpen && 
+                    !e.target.closest('#chat-widget') && 
+                    !e.target.closest('#chat-window')) {
+                    this.closeChat();
+                }
+            });
+        } else {
+            console.warn('Не все элементы чата найдены');
+        }
     }
 
     toggleChat() {
         this.isOpen = !this.isOpen;
         const chatWindow = document.getElementById('chat-window');
         
-        if (this.isOpen) {
-            chatWindow.style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('chat-input').focus();
-            }, 100);
-            this.addWelcomeMessage();
-        } else {
-            this.closeChat();
+        if (chatWindow) {
+            if (this.isOpen) {
+                chatWindow.style.display = 'flex';
+                setTimeout(() => {
+                    const chatInput = document.getElementById('chat-input');
+                    if (chatInput) chatInput.focus();
+                }, 100);
+                this.addWelcomeMessage();
+            } else {
+                this.closeChat();
+            }
         }
     }
 
     closeChat() {
         this.isOpen = false;
-        document.getElementById('chat-window').style.display = 'none';
-        document.getElementById('chat-input').blur();
+        const chatWindow = document.getElementById('chat-window');
+        const chatInput = document.getElementById('chat-input');
+        
+        if (chatWindow) chatWindow.style.display = 'none';
+        if (chatInput) chatInput.blur();
     }
 
     addWelcomeMessage() {
         const messages = document.getElementById('chat-messages');
-        if (messages.children.length === 0) {
+        if (messages && messages.children.length === 0) {
             this.addMessage('Привет! Я AI-ассистент [начинающий] Сергея. Можете пораспрашивать меня о нём, его опыте, навыках, увлечениях! И даже чуть больше, чего нет на сайте😊.', 'bot');
         }
     }
 
     addMessage(text, sender) {
         const messages = document.getElementById('chat-messages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}-message`;
-        messageDiv.textContent = text;
-        messages.appendChild(messageDiv);
-        messages.scrollTop = messages.scrollHeight;
+        if (messages) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
     }
 
     showTyping() {
         const messages = document.getElementById('chat-messages');
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        `;
-        typingDiv.id = 'typing-indicator';
-        messages.appendChild(typingDiv);
-        messages.scrollTop = messages.scrollHeight;
+        if (messages) {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            typingDiv.id = 'typing-indicator';
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
     }
 
     hideTyping() {
@@ -226,51 +247,51 @@ class AIChat {
     }
 
     findAnswer(question) {
-        const lowerQuestion = question.toLowerCase().trim();
-        
-        // Простые приветствия
-        if (lowerQuestion.includes('привет') || lowerQuestion.includes('здравств') || 
-            lowerQuestion === 'hi' || lowerQuestion === 'hello') {
-            return knowledgeBase.привет;
+        if (!question || question.trim().length < 2) {
+            return "Задайте вопрос подробнее? 😊";
         }
         
-        // Поиск по ключевым словам
+        const lowerQuestion = question.toLowerCase().trim();
+        console.log('Ищем ответ для:', lowerQuestion);
+        
+        // Приоритет: точные совпадения
         for (const [key, answer] of Object.entries(knowledgeBase)) {
-            if (lowerQuestion.includes(key)) {
+            if (lowerQuestion === key || lowerQuestion.includes(key)) {
                 return answer;
             }
         }
         
-        // Дополнительные проверки для синонимов
-        if (lowerQuestion.includes('работа') || lowerQuestion.includes('опыт') || lowerQuestion.includes('карьер')) {
-            return knowledgeBase.опыт;
+        // Расширенный поиск по темам
+        const topicMap = {
+            'работа|опыт|карьер|проект': knowledgeBase.проекты,
+            'умеет|может|скилл|навык': knowledgeBase.навыки,
+            'учил|образован|вуз|универ': knowledgeBase.образование,
+            'хобби|интерес|увлекает': knowledgeBase.увлечения,
+            'связь|контакт|телеграм|инстаграм': knowledgeBase.контакты,
+            'философ|принцип|подход': knowledgeBase.философия,
+            'ургант|пятница|mtv|o2tv': knowledgeBase.ургант,
+            'диджей|музык|клуб': knowledgeBase.диджей,
+            'севастополь|город|родина': knowledgeBase.севастополь,
+            'инженер|автомобил|техник': knowledgeBase.инженer,
+            'поэз|стих|белые': knowledgeBase['белые стихи'],
+            'будущ|тренд|технолог': knowledgeBase.тренды,
+            'ии|ai|искусственн': knowledgeBase.ии
+        };
+        
+        for (const [pattern, answer] of Object.entries(topicMap)) {
+            if (new RegExp(pattern).test(lowerQuestion)) {
+                return answer;
+            }
         }
         
-        if (lowerQuestion.includes('умеет') || lowerQuestion.includes('может') || lowerQuestion.includes('скил')) {
-            return knowledgeBase.навыки;
-        }
-        
-        if (lowerQuestion.includes('учил') || lowerQuestion.includes('образован') || lowerQuestion.includes('вуз')) {
-            return knowledgeBase.образование;
-        }
-        
-        if (lowerQuestion.includes('хобби') || lowerQuestion.includes('интерес') || lowerQuestion.includes('увлекает')) {
-            return knowledgeBase.увлечения;
-        }
-        
-        if (lowerQuestion.includes('связь') || lowerQuestion.includes('контакт') || lowerQuestion.includes('телеграм') || lowerQuestion.includes('инстаграм')) {
-            return knowledgeBase.контакты;
-        }
-        
-        if (lowerQuestion.includes('кто') || lowerQuestion.includes('что')) {
-            return knowledgeBase['кто такой'];
-        }
-        
-        return "Ну Вы ваще даёте! Я же не СуперПупер БОТ на крутейшем сервере. Я могу рассказать Вам о проектах Сергея, или его опыте навыках в медиа-производстве, увлечениях. Что интересует? 😎";
+        // Ответ по умолчанию
+        return "Интересный вопрос! Я могу рассказать о проектах Сергея, его опыте в медиа, философии или увлечениях. Что именно вас интересует? 😎";
     }
 
     async sendMessage() {
         const input = document.getElementById('chat-input');
+        if (!input) return;
+        
         const message = input.value.trim();
         
         if (!message) return;
@@ -286,12 +307,47 @@ class AIChat {
         setTimeout(() => {
             this.hideTyping();
             
-            // Всегда сначала используем локальную базу знаний
-            const answer = this.findAnswer(message);
-            this.addMessage(answer, 'bot');
+            // Используем локальную базу знаний
+            try {
+                const answer = this.findAnswer(message);
+                this.addMessage(answer, 'bot');
+            } catch (error) {
+                console.error('Ошибка при поиске ответа:', error);
+                this.addMessage("Что-то пошло не так... Попробуйте задать вопрос по-другому? 🤔", 'bot');
+            }
             
-        }, 1000 + Math.random() * 1000);
+        }, 800 + Math.random() * 800);
     }
 }
+
+// Функция для тестирования ассистента
+function testAIChat() {
+    console.log('=== ТЕСТ AI АССИСТЕНТА ===');
+    console.log('База знаний:', Object.keys(knowledgeBase).length, 'записей');
+    console.log('Цитаты:', quotes.length, 'фраз');
+    
+    const testQuestions = [
+        'привет',
+        'расскажи о проектах',
+        'какой опыт работы',
+        'философия',
+        'увлечения',
+        'контакты'
+    ];
+    
+    testQuestions.forEach((q, i) => {
+        setTimeout(() => {
+            const answer = window.aiChat.findAnswer(q);
+            console.log(`❓ "${q}"\n✅ ${answer.substring(0, 80)}...`);
+        }, i * 200);
+    });
+}
+
+// Авто-тест при загрузке (можно отключить)
+setTimeout(() => {
+    if (window.aiChat && console) {
+        testAIChat();
+    }
+}, 2000);
 
 console.log('Kancher.Tv загружен! Добро пожаловать в хронику.');
