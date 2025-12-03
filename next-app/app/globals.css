@@ -1,0 +1,132 @@
+/* Глобальные стили для Next.js приложения */
+
+/* Основные переменные и стили */
+:root {
+  --gradient-start: #0f045c;
+  --gradient-mid: #423e8e;
+  --gradient-end: #0f045c;
+  --gradient-text: linear-gradient(90deg, #00ffea, #00e0ff, #0077ff, #273674, #635eaa, #ba5c5c);
+  --gradient-text-alt: linear-gradient(-45deg, #ff00aa, #ff00cc, #ff00ee, #ff00ff);
+  --gradient-border: linear-gradient(45deg, #00b3ff, #0066ff, #8a2be2);
+  --border-width: 2px;
+  --border-radius: 20px;
+  --card-bg: rgba(15, 4, 92, 0.3);
+  --card-bg-hover: rgba(66, 62, 142, 0.5);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --transition: all 0.3s ease;
+  --shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  --backdrop: backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  --glow: 0 0 15px rgba(0, 255, 234, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--gradient-start);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Стили для контента */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* Стили для кнопок */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  background: transparent;
+  border: var(--border-width) solid transparent;
+  border-image: var(--gradient-border);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glow);
+}
+
+/* Стили для карточек */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  margin: 20px 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: var(--border-width) solid transparent;
+  border-image: var(--gradient-border);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+/* Текст с градиентом */
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 8s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Стили для секций */
+.section {
+  padding: 80px 0;
+  position: relative;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  text-align: center;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 8s linear infinite;
+}
+
+/* Адаптивность для заголовков */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+}
