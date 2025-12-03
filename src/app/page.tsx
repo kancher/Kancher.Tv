@@ -57,7 +57,7 @@ export default function Home() {
           
           if (targetSection) {
             window.scrollTo({
-              top: targetSection.offsetTop - 80,
+              top: targetSection.getBoundingClientRect().top + window.pageYOffset - 80,
               behavior: 'smooth'
             });
           }
